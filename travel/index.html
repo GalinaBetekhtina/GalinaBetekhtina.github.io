@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<title>Главная</title>
+	<meta charset="UTF-8">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="css/style.min.css?_v=20240212164012">
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<div class="wrapper">
+		<header class="header">
+			<div class="header__container">
+				<a href="" class="header__logo _icon-logo"><span>Travel Portal</span> </a>
+				<nav class="header__menu menu-header">
+					<ul data-da=".menu__body, 767.98" class="menu-header__list">
+						<li class="menu-header__item">
+							<a data-goto=".preview" href="#" class="menu-header__link">How It Works</a>
+						</li>
+						<li class="menu-header__item">
+							<a data-goto=".steps" href="#" class="menu-header__link">Plan Your Trip</a>
+						</li>
+						<li class="menu-header__item">
+							<a data-goto=".destinations" href="#" class="menu-header__link">Destinations</a>
+						</li>
+						<li class="menu-header__item">
+							<a data-goto=".stories" href="#" class="menu-header__link">Travel Stories</a>
+						</li>
+						<li class="menu-header__item_unvisible">
+							<a href="#" data-popup="#login" class="menu-header__link">Account</a>
+						</li>
+						<li class="menu-header__item_unvisible">
+							<a data-goto=".footer" href="#" class="menu-header__link">Social Media</a>
+						</li>
+					</ul>
+				</nav>
+				<button type="button" data-popup="#login" class="header__button button button_small">Login</button>
+				<nav hidden class="menu">
+					<button type="button" class="menu__icon icon-menu"><span></span></button>
+					<div class="menu__body">
+
+					</div>
+				</nav>
+			</div>
+		</header>
+		<main class="page page_home">
+			<section class="page__preview preview">
+				<div class="preview__container">
+					<div class="preview__body">
+						<h1 class="preview__title">Explore the beauty of the World</h1>
+						<div class="preview__text">Receive personalized recommendations for countries, hotels, activities and more</div>
+					</div>
+					<form action="#" class="preview__search search">
+						<input autocomplete="" type="text" name="form[]" data-error="Ошибка" placeholder="What would you like to do?" class="search__input">
+						<div class="search__button">
+							<button class="button button_page">Start Planning</button>
+						</div>
+					</form>
+				</div>
+				<div class="preview__image _ibg">
+					<picture><source srcset="img/preview/bg.webp" type="image/webp"><img src="img/preview/bg.jpg?_v=1707748812197" alt="mountains"></picture>
+				</div>
+			</section>
+			<section id="steps1" class="page__steps steps">
+				<div class="steps__container">
+					<h2 class="steps__title title">3 STEPS TO THE PERFECT TRIP</h2>
+					<div class="steps__items">
+						<div class="steps__item steps__item_1 item">
+							<div class="item__content">
+								<div class="item__img">
+									<img src="img/steps/01.svg?_v=1707748812197" alt="riding a bicycle">
+								</div>
+								<div class="item__text item__text_1">Tell us what you want to do</div>
+							</div>
+
+						</div>
+						<div class="steps__item steps__item_2 item">
+							<div class="item__content">
+								<div class="item__img">
+									<img src="img/steps/02.svg?_v=1707748812197" alt="calendar">
+								</div>
+								<div class="item__text item__text_2">Share us preferable dates </div>
+							</div>
+						</div>
+						<div class="steps__item steps__item_3 item">
+							<div class="item__content">
+								<div class="item__img">
+									<img src="img/steps/03.svg?_v=1707748812197" alt="the plane">
+								</div>
+								<div class="item__text item__text_3">We will give you recommendations</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id="destinations" class="page__destinations destinations">
+				<div class="destinations__container">
+					<h2 class="destinations__title title">POPULAR DESTINATIONS</h2>
+				</div>
+				<div class="destinations__slider">
+					<div class="destinations__swiper">
+						<div class="destinations__slide slide-destinations">
+							<div class="slide-destinations__image">
+								<picture><source srcset="img/destinations/spain.webp" type="image/webp"><img src="img/destinations/spain.jpg?_v=1707748812197" alt="Spain"></picture>
+								<div class="slide-destinations__location">Spain</div>
+							</div>
+						</div>
+						<div class="destinations__slide slide-destinations">
+							<div class="slide-destinations__image">
+								<picture><source srcset="img/destinations/japan.webp" type="image/webp"><img src="img/destinations/japan.jpg?_v=1707748812197" alt="Japan"></picture>
+								<div class="slide-destinations__location">Japan</div>
+							</div>
+						</div>
+						<div class="destinations__slide slide-destinations">
+							<div class="slide-destinations__image">
+								<picture><source srcset="img/destinations/usa.webp" type="image/webp"><img src="img/destinations/usa.jpg?_v=1707748812197" alt="USA"></picture>
+								<div class="slide-destinations__location">USA</div>
+							</div>
+						</div>
+					</div>
+					<div class="destinations__controll controll-destinations">
+						<button type="button" class="controll-destinations__arrow controll-destinations__arrow--left _icon-arrow"></button>
+						<button type="button" class="controll-destinations__arrow controll-destinations__arrow--right _icon-arrow"></button>
+						<div class="controll-destinations__dotts"></div>
+					</div>
+				</div>
+				<div class="destinations__button">
+					<a href="#" class="destinations__link button button_page _icon-button-right">Find More</a>
+				</div>
+			</section>
+			<section id="stories" class="page__stories stories">
+				<h2 class="stories__title title">TRAVEL STORIES</h2>
+				<div class="stories__ob">
+					<div class="stories__background">
+						<picture><source srcset="img/stories/bg.webp" type="image/webp"><img src="img/stories/bg.jpg?_v=1707748812197" alt=""></picture>
+					</div>
+					<div class="stories__body">
+						<div class="stories__container">
+							<div class="stories__columns">
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/thailahd.webp" type="image/webp"><img src="img/stories/thailahd.jpg?_v=1707748812197" alt="Photo of Attractive Thailand"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">10 Photos of Attractive Thailand</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/utah.webp" type="image/webp"><img src="img/stories/utah.jpg?_v=1707748812197" alt="Photo of Canyonlands National Park"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">Canyonlands National Park, Utah</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing eli Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/mountains.webp" type="image/webp"><img src="img/stories/mountains.jpg?_v=1707748812197" alt="Photo of mountains"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">I left my heart in the Mountains!</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+								<div class="stories__column">
+									<div class="stories__image _ibg">
+										<picture><source srcset="img/stories/life.webp" type="image/webp"><img src="img/stories/life.jpg?_v=1707748812197" alt="Photos of bus in mountains"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">The Longest journey in my life!</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+							</div>
+							<div class="stories__button">
+								<a href="#" class="stories__link button button_page _icon-button-right">See More</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+				<!--
+					<div class="stories__background">
+						<picture><source srcset="img/stories/bg.webp" type="image/webp"><img src="img/stories/bg.jpg?_v=1707748812197" alt=""></picture>
+					</div>
+					<div class="stories__body">
+						<div class="stories__container">
+							<div class="stories__columns">
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/thailahd.webp" type="image/webp"><img src="img/stories/thailahd.jpg?_v=1707748812197" alt="Photo of Attractive Thailand"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">10 Photos of Attractive Thailand</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/utah.webp" type="image/webp"><img src="img/stories/utah.jpg?_v=1707748812197" alt="Photo of Canyonlands National Park"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">Canyonlands National Park, Utah</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing eli Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/mountains.webp" type="image/webp"><img src="img/stories/mountains.jpg?_v=1707748812197" alt="Photo of mountains"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">I left my heart in the Mountains!</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+								<div class="stories__column">
+									<div class="stories__image">
+										<picture><source srcset="img/stories/life.webp" type="image/webp"><img src="img/stories/life.jpg?_v=1707748812197" alt="Photos of bus in mountains"></picture>
+									</div>
+									<div class="stories__content">
+										<h3 class="stories__subtitle">The Longest journey in my life!</h3>
+										<div class="stories__text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+										<a href="#" class="stories__more">Read More</a>
+									</div>
+								</div>
+							</div>
+							<div class="stories__button">
+								<a href="#" class="stories__link button button_page _icon-button-right">See More</a>
+							</div>
+							
+						</div>
+					</div>
+					-->
+			</section>
+		</main>
+		<footer id="social-media" class="footer">
+			<div class="footer__container">
+				<div class="footer__rights">All Rights Reserved © Travel Portal</div>
+				<div class="footer__social social">
+					<a href="" class="social__inst _icon-instagram"></a>
+					<a href="" class="social__youtube _icon-instagram"></a>
+					<a href="https://twitter.com/?lang=ru" target="_blank" class="social__twitter _icon-twitter"></a>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<div id="login" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<div class="popup__text">
+					<h2 class="popup__title">Log in to your account</h2>
+					<div class="popup__login">
+						<button type="button" class="popup__button"><img src="img/icons/social/Facebook.svg?_v=1707748812197" alt="logo Facebook">Sign In with Facebook</button>
+						<button type="button" class="popup__button"><img src="img/icons/social/Google.svg?_v=1707748812197" alt="logo Google">Sign In with Google</button>
+					</div>
+					<div class="popup__or">or</div>
+					<form action="" class="popup__form form-popup">
+						<div class="form-popup__name">E-mail</div>
+						<input type="email" class="form-popup__input">
+						<div class="form-popup__name">Password</div>
+						<input type="password" class="form-popup__input">
+						<div class="popup__login">
+							<button type="submit" class="button button_singin ">Sign In</button>
+						</div>
+					</form>
+					<a href="" class="popup__link">Forgot Your Password?</a>
+					<div class="popup__register">Don’t have an account? <a href="" data-popup="#register" class="popup__link">Register</a></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="register" aria-hidden="true" class="popup">
+		<div class="popup__wrapper">
+			<div class="popup__content">
+				<div class="popup__text">
+					<h2 class="popup__title">Create account</h2>
+					<form action="" class="popup__form form-popup">
+						<div class="form-popup__name">E-mail</div>
+						<input type="email" class="form-popup__input">
+						<div class="form-popup__name">Password</div>
+						<input type="password" class="form-popup__input">
+						<div class="popup__login">
+							<button type="submit" class="button button_singin ">Sign Up</button>
+						</div>
+					</form>
+					<div class="popup__register">Already have an account? <a href="" data-popup="#login" class="popup__link">Log in</a></div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/app.min.js?_v=20240212164012"></script>
+</body>
+
+</html>

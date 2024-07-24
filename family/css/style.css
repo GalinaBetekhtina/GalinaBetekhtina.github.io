@@ -880,12 +880,12 @@ body.popup-show::after {
 }
 @media (min-width: 47.875em) and (max-width: 87.5em) {
   .preview__image {
-    padding-right: calc(3.125rem + 1.875 * (((100vw - 47.875rem)) / ((39.625))));
+    //padding-right: calc(3.125rem + 1.875 * (((100vw - 47.875rem)) / ((39.625))));
   }
 }
 @media (max-width: 47.875em) {
   .preview__image {
-    padding-right: 3.125rem;
+    //padding-right: 3.125rem;
   }
 }
 @media (max-width: 767.98px) {

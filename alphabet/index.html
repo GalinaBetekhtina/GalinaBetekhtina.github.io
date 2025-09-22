@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Немецкие буквы</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #f2f2f2;
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      width: 100%;
+      padding: 1%  5%;
+      
+      box-sizing: border-box;
+    }
+
+    .letter {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      border: 2px solid transparent; /* прозрачная граница по умолчанию */
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px;
+      min-height: 180px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    /* Hover на ПК: подсветка границы */
+    .letter:hover {
+      border-color: orange;
+      transform: scale(1.05);
+    }
+
+    /* Активная карточка на мобильных */
+    .letter.active {
+      border-color: orange;
+      transform: scale(1.05);
+    }
+
+    .img-wrapper {
+      flex: 1 1 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-height: calc(100% - 30px);
+    }
+
+    .letter img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .letter span {
+      display: block;
+      font-size: 24px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex-shrink: 0;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid">
+    <div class="letter" data-sound="sounds/a_wie_ameise.mp3">
+      <div class="img-wrapper">
+        <img src="images/ameise.jpg" alt="A">
+      </div>
+      <span>A a</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/a_wie_affe.mp3">
+      <div class="img-wrapper">
+        <img src="images/affe.jpg" alt="A">
+      </div>
+      <span>A a</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/e_wie_esel.mp3">
+      <div class="img-wrapper">
+        <img src="images/esel.jpg" alt="E">
+      </div>
+      <span>E e</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/e_wie_ente.mp3">
+      <div class="img-wrapper">
+        <img src="images/ente.jpg" alt="E">
+      </div>
+      <span>E e</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/i_wie_igel.mp3">
+      <div class="img-wrapper">
+        <img src="images/igel.jpg" alt="I">
+      </div>
+      <span>I i</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/i_wie_insel.mp3">
+      <div class="img-wrapper">
+        <img src="images/insel.jpg" alt="I">
+      </div>
+      <span>I i</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/o_wie_ofen.mp3">
+      <div class="img-wrapper">
+        <img src="images/ofen.jpg" alt="O">
+      </div>
+      <span>O o</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/o_wie_ordner.mp3">
+      <div class="img-wrapper">
+        <img src="images/ordner.jpg" alt="O">
+      </div>
+      <span>O o</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/u_wie_ufo.mp3">
+      <div class="img-wrapper">
+        <img src="images/ufo.jpg" alt="U">
+      </div>
+      <span>U u</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/a_wie_aepfel.mp3">
+      <div class="img-wrapper">
+        <img src="images/äpfel.jpg" alt="Ä">
+      </div>
+      <span>Ä ä</span>
+    </div>
+
+    <div class="letter" data-sound="sounds/au_wie_auto.mp3">
+      <div class="img-wrapper">
+        <img src="images/auto.jpg" alt="AU">
+      </div>
+      <span>Au au</span>
+    </div>
+    <div class="letter" data-sound="sounds/ei_wie_eichhoernchen.mp3">
+      <div class="img-wrapper">
+        <img src="images/eichhoernchen.jpg" alt="EI">
+      </div>
+      <span>Ei ei</span>
+    </div>
+    <div class="letter" data-sound="sounds/eu_wie_eule.mp3">
+      <div class="img-wrapper">
+        <img src="images/eule.jpg" alt="EU">
+      </div>
+      <span>Eu eu</span>
+    </div>
+    <div class="letter" data-sound="sounds/oe_wie_oel.mp3">
+      <div class="img-wrapper">
+        <img src="images/oel.jpg" alt="Ö">
+      </div>
+      <span>Ö ö</span>
+    </div>
+    <div class="letter" data-sound="sounds/ue_wie_ueberholverbot.mp3">
+      <div class="img-wrapper">
+        <img src="images/ueberholverbot.jpg" alt="Ü">
+      </div>
+      <span>Ü ü </span>
+    </div>
+    <div class="letter" data-sound="sounds/m_wie_maus.mp3">
+      <div class="img-wrapper">
+        <img src="images/maus.jpg" alt="M">
+      </div>
+      <span>M m</span>
+    </div>
+    <div class="letter" data-sound="sounds/s_wie_sonne.mp3">
+      <div class="img-wrapper">
+        <img src="images/sonne.jpg" alt="S">
+      </div>
+      <span>S s</span>
+    </div>
+    <div class="letter" data-sound="sounds/d_wie_dino.mp3">
+      <div class="img-wrapper">
+        <img src="images/dino.jpg" alt="D">
+      </div>
+      <span>D d</span>
+    </div>
+    <div class="letter" data-sound="sounds/w_wie_wolf.mp3">
+      <div class="img-wrapper">
+        <img src="images/wolf.jpg" alt="W">
+      </div>
+      <span>W w </span>
+    </div>
+    <div class="letter" data-sound="sounds/g_wie_gabel.mp3">
+      <div class="img-wrapper">
+        <img src="images/gabel.jpg" alt="G">
+      </div>
+      <span>G g </span>
+    </div>
+    <div class="letter" data-sound="sounds/b_wie_baum.mp3">
+      <div class="img-wrapper">
+        <img src="images/baum.jpg" alt="B">
+      </div>
+      <span>B b</span>
+    </div>
+    <div class="letter" data-sound="sounds/j_wie_jacke.mp3">
+      <div class="img-wrapper">
+        <img src="images/jacke.jpg" alt="J">
+      </div>
+      <span>J j</span>
+    </div>
+    <div class="letter" data-sound="sounds/h_wie_hut.mp3">
+      <div class="img-wrapper">
+        <img src="images/hut.jpg" alt="H">
+      </div>
+      <span>H h</span>
+    </div>
+    <div class="letter" data-sound="sounds/n_wie_nashorn.mp3">
+      <div class="img-wrapper">
+        <img src="images/nashorn.jpg" alt="N">
+      </div>
+      <span>N n </span>
+    </div>
+     <div class="letter" data-sound="sounds/z_wie_zirkus.mp3">
+      <div class="img-wrapper">
+        <img src="images/zirkus.jpg" alt="Z">
+      </div>
+      <span>Z z</span>
+    </div>
+    <div class="letter" data-sound="sounds/t_wie_tiger.mp3">
+      <div class="img-wrapper">
+        <img src="images/tiger.jpg" alt="T">
+      </div>
+      <span>T t</span>
+    </div>
+    <div class="letter" data-sound="sounds/f_wie_fisch.mp3">
+      <div class="img-wrapper">
+        <img src="images/fisch.jpg" alt="F">
+      </div>
+      <span>F f </span>
+    </div>
+    <div class="letter" data-sound="sounds/k_wie_kaenguru.mp3">
+      <div class="img-wrapper">
+        <img src="images/kaenguru.jpg" alt="K">
+      </div>
+      <span>K k </span>
+    </div>
+    <div class="letter" data-sound="sounds/p_wie__pinguin.mp3">
+      <div class="img-wrapper">
+        <img src="images/pinguin.jpg" alt="P">
+      </div>
+      <span>P p</span>
+    </div>
+    <div class="letter" data-sound="sounds/r_wie_rabe.mp3">
+      <div class="img-wrapper">
+        <img src="images/rabe.jpg" alt="R">
+      </div>
+      <span>R r</span>
+    </div>
+    <div class="letter" data-sound="sounds/l_wie_loewe.mp3">
+      <div class="img-wrapper">
+        <img src="images/loewe.jpg" alt="L">
+      </div>
+      <span>L l</span>
+    </div>
+    <div class="letter" data-sound="sounds/ch_wie_buch.mp3">
+      <div class="img-wrapper">
+        <img src="images/buch.jpg" alt="CH">
+      </div>
+      <span> ch </span>
+    </div>
+<div class="letter" data-sound="sounds/ch_wie_milch.mp3">
+      <div class="img-wrapper">
+        <img src="images/milch.jpg" alt="CH">
+      </div>
+      <span>ch </span>
+    </div>
+     <div class="letter" data-sound="sounds/ng_wie_ring.mp3">
+      <div class="img-wrapper">
+        <img src="images/ring.jpg" alt="NG">
+      </div>
+      <span>ng</span>
+    </div>
+    <div class="letter" data-sound="sounds/nk_wie_bank.mp3">
+      <div class="img-wrapper">
+        <img src="images/bank.jpg" alt="NK">
+      </div>
+      <span>nk</span>
+    </div>
+    <div class="letter" data-sound="sounds/sch_wie_schaf.mp3">
+      <div class="img-wrapper">
+        <img src="images/schaf.jpg" alt="SCH">
+      </div>
+      <span>sch </span>
+    </div>
+    <div class="letter" data-sound="sounds/sp_wie_spinne.mp3">
+      <div class="img-wrapper">
+        <img src="images/spinne.jpg" alt="sp">
+      </div>
+      <span>sp </span>
+    </div>
+    <div class="letter" data-sound="sounds/st_wie_stern.mp3">
+      <div class="img-wrapper">
+        <img src="images/stern.jpg" alt="ST">
+      </div>
+      <span>st</span>
+    </div>
+    <div class="letter" data-sound="sounds/qu_wie_qualle.mp3">
+      <div class="img-wrapper">
+        <img src="images/qualle.jpg" alt="QU">
+      </div>
+      <span>Qu qu</span>
+    </div>
+    <div class="letter" data-sound="sounds/c_wie_computer.mp3">
+      <div class="img-wrapper">
+        <img src="images/computer.jpg" alt="C">
+      </div>
+      <span>C c</span>
+    </div>
+    <div class="letter" data-sound="sounds/x_wie_xylofon.mp3">
+      <div class="img-wrapper">
+        <img src="images/xylophone.jpg" alt="X">
+      </div>
+      <span> X x </span>
+    </div>
+     <div class="letter" data-sound="sounds/pf_wie_pferd.mp3">
+      <div class="img-wrapper">
+        <img src="images/pferd.jpg" alt="PF">
+      </div>
+      <span>Pf pf</span>
+    </div>
+    <div class="letter" data-sound="sounds/v_wie_vogel.mp3">
+      <div class="img-wrapper">
+        <img src="images/vogel.jpg" alt="V">
+      </div>
+      <span>V v</span>
+    </div>
+    <div class="letter" data-sound="sounds/sz_wie_fusz.mp3">
+      <div class="img-wrapper">
+        <img src="images/fuss.jpg" alt="SS">
+      </div>
+      <span>ß</span>
+    </div>
+    <div class="letter" data-sound="sounds/y_wie_yak.mp3">
+      <div class="img-wrapper">
+        <img src="images/yak.jpg" alt="Y">
+      </div>
+      <span> Y y </span>
+    </div>
+    <div class="letter" data-sound="sounds/ie_wie_biene.mp3">
+      <div class="img-wrapper">
+        <img src="images/biene.jpg" alt="B">
+      </div>
+      <span> ie </span>
+    </div>
+
+
+
+
+
+
+
+
+
+  </div>
+
+   <script>
+    let currentAudio = null;
+
+    document.querySelectorAll('.letter').forEach(letter => {
+      // Воспроизведение звука при клике
+      letter.addEventListener('click', () => {
+        const soundFile = letter.getAttribute('data-sound');
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+        }
+        currentAudio = new Audio(soundFile);
+        currentAudio.play();
+      });
+
+      // Подсветка границ на мобильных устройствах
+      letter.addEventListener('touchstart', () => letter.classList.add('active'));
+      letter.addEventListener('touchend', () => letter.classList.remove('active'));
+    });
+  </script>
+
+</body>
+</html>
+

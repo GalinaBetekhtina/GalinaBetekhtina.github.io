@@ -23,6 +23,13 @@
       
       box-sizing: border-box;
     }
+    /* Для экранов <= 600px (телефоны) */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr); /* ровно 3 карточки в ряд */
+  }
+}
+
 
     .letter {
       background: white;
@@ -405,4 +412,5 @@
 
 </body>
 </html>
+
 

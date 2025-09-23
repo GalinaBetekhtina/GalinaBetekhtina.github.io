@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const wordText = randomCard.getAttribute('data-modal-text') || randomCard.querySelector('span')?.outerHTML || '';
 
     modal.classList.add('game-mode');
-    modalLetter.innerHTML = "❓";
+    modalLetter.innerHTML = "❓❓";
     modalLetter.style.display = "block";
     modalImage.src = randomCard.querySelector('img').src;
     modalImage.style.display = "block";
@@ -181,3 +181,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+

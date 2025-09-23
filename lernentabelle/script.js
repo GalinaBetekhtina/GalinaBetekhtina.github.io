@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  let currentAudio = null;
-  let activeCard = null;
+  let currentCard = null;
   let autoplayIndex = 0;
   let autoplayMode = false;
   let gameMode = false;
@@ -11,29 +10,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalLetter = document.getElementById('modalLetter');
   const modalImage = document.getElementById('modalImage');
 
-  // --- разблокировка аудио для iOS ---
-  function unlockAudioIOS(callback) {
-    const context = new (window.AudioContext || window.webkitAudioContext)();
-    const buffer = context.createBuffer(1, context.sampleRate * 0.1, context.sampleRate); // короткая тишина
-    const source = context.createBufferSource();
-    source.buffer = buffer;
-    source.connect(context.destination);
-    source.start(0);
-    source.onended = () => { if (callback) callback(); };
-  }
+  // Создаем скрытый <audio> элемент для воспроизведения звуков
+  const gameAudio = document.createElement('audio');
+  gameAudio.style.display = 'none';
+  document.body.appendChild(gameAudio);
 
-  // --- проигрывание звука ---
+  // --- воспроизведение аудио через DOM <audio> ---
   function playSound(src, onEnded) {
-    if (!src) return null;
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
+    if (!src) return;
+    gameAudio.src = src;
+    gameAudio.currentTime = 0;
+    const playPromise = gameAudio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
     }
-    const audio = new Audio(src);
-    currentAudio = audio;
-    audio.play().catch(() => {});
-    audio.onended = () => { if (onEnded) onEnded(); };
-    return audio;
+    gameAudio.onended = () => { if (onEnded) onEnded(); };
   }
 
   // --- автоподгонка текста ---
@@ -45,13 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- открыть модалку ---
-  function openModalForCard(card, soundFile, showImageInModal = false, onEnded = null) {
-    activeCard = card;
+  // --- открыть модалку для обычного клика ---
+  function openModalForCard(card, soundFile, showImage = false, onEnded = null) {
+    currentCard = card;
     const modalHTML = card.getAttribute('data-modal-text') || card.querySelector('span')?.textContent;
     modalLetter.innerHTML = modalHTML;
 
-    if (showImageInModal) {
+    if (showImage) {
       modalImage.src = card.querySelector('img').src;
       modalImage.style.display = 'block';
       modalLetter.classList.add('autoplay');
@@ -60,10 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
       modalLetter.classList.remove('autoplay');
     }
 
-    modalLetter.style.display = "block";
     overlay.classList.add('show');
     document.body.style.overflow = 'hidden';
-
+    modalLetter.style.display = "block";
     adjustFontSize(modalLetter, modalLetter.parentElement.clientWidth - 20);
 
     playSound(soundFile, () => {
@@ -74,14 +64,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- закрыть модалку ---
   function closeModal() {
-    activeCard = null;
+    currentCard = null;
     overlay.classList.remove('show');
     modal.classList.remove('game-mode');
     document.body.style.overflow = '';
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
     modalLetter.style.display = "block";
     modalImage.style.display = "none";
 
@@ -89,9 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
       clearTimeout(gameTimeout);
       gameTimeout = null;
     }
+
+    gameAudio.pause();
+    gameAudio.currentTime = 0;
   }
 
-  // --- клик по обычной карточке ---
+  // --- клик по карточке ---
   document.querySelectorAll('.letter').forEach(letter => {
     letter.addEventListener('click', () => {
       if (!autoplayMode && !gameMode) {
@@ -125,52 +114,48 @@ document.addEventListener('DOMContentLoaded', () => {
     autoplayCards(Array.from(document.querySelectorAll('.letter')));
   });
 
-  // --- РЕЖИМ ИГРЫ ---
+  // --- ИГРА ---
   function playRandomCard() {
     if (!gameMode) return;
 
     const cards = Array.from(document.querySelectorAll('.letter'));
     if (cards.length === 0) return;
 
+    // Сбрасываем предыдущие таймауты и звук
     if (gameTimeout) {
       clearTimeout(gameTimeout);
       gameTimeout = null;
     }
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
+    gameAudio.pause();
+    gameAudio.currentTime = 0;
 
     const randomCard = cards[Math.floor(Math.random() * cards.length)];
     const soundFile = randomCard.getAttribute('data-sound');
-    const wordText = randomCard.getAttribute('data-modal-text') 
-                     || randomCard.querySelector('span')?.outerHTML 
-                     || '';
+    const wordText = randomCard.getAttribute('data-modal-text') || randomCard.querySelector('span')?.outerHTML || '';
 
     modal.classList.add('game-mode');
 
-    // Показываем ❓ и картинку сразу
-    modalLetter.innerHTML = "❓❓❓";
+    // Показываем ❓ и картинку
+    modalLetter.innerHTML = "❓";
     modalLetter.style.display = "block";
     modalImage.src = randomCard.querySelector('img').src;
     modalImage.style.display = "block";
-
     overlay.classList.add('show');
     document.body.style.overflow = 'hidden';
 
-    // Разблокировка аудио на iOS, затем таймаут 5 секунд
-    unlockAudioIOS(() => {
-      gameTimeout = setTimeout(() => {
-        if (!gameMode) return;
+    // Задержка 5 секунд перед заменой текста и воспроизведением звука
+    gameTimeout = setTimeout(() => {
+      if (!gameMode) return;
 
-        modalLetter.innerHTML = wordText;
-        playSound(soundFile, () => {
-          if (gameMode) playRandomCard();
-        });
+      modalLetter.innerHTML = wordText;
 
-        gameTimeout = null;
-      }, 5000);
-    });
+      // Воспроизводим звук
+      playSound(soundFile, () => {
+        if (gameMode) playRandomCard();
+      });
+
+      gameTimeout = null;
+    }, 5000);
   }
 
   const grammBtn = document.getElementById('grammBtn');
@@ -179,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playRandomCard();
   });
 
-  // --- закрытие overlay ---
+  // --- закрытие при клике на оверлей ---
   overlay.addEventListener('click', (event) => {
     if (event.target === overlay) {
       closeModal();

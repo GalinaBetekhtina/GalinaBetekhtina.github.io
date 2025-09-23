@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-  let currentAudio = null;
+  let currentAudio = new Audio(); // один экземпляр аудио для iOS
   let activeCard = null;
   let autoplayIndex = 0;
   let autoplayMode = false;
   let gameMode = false;
-  let gameTimeout = null; // для очистки таймаута игры
+  let gameTimeout = null;
 
   const overlay = document.getElementById('overlay');
   const modal = document.querySelector('.modal');
@@ -14,15 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- проигрывание звука ---
   function playSound(src, onEnded) {
     if (!src) return null;
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
-    const audio = new Audio(src);
-    currentAudio = audio;
-    audio.play().catch(() => {});
-    audio.onended = () => { if (onEnded) onEnded(); };
-    return audio;
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+    currentAudio.src = src;
+    currentAudio.play().catch(() => {});
+    currentAudio.onended = () => { if (onEnded) onEnded(); };
+    return currentAudio;
   }
 
   // --- автоподгонка текста ---
@@ -67,14 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.remove('show');
     modal.classList.remove('game-mode');
     document.body.style.overflow = '';
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+
     modalLetter.style.display = "block";
     modalImage.style.display = "none";
 
-    // очистка таймаута игры
     if (gameTimeout) {
       clearTimeout(gameTimeout);
       gameTimeout = null;
@@ -115,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
     autoplayCards(Array.from(document.querySelectorAll('.letter')));
   });
 
-  // --- ИГРА ---
+  // --- ИГРА с полной синхронизацией ---
   function playRandomCard() {
     if (!gameMode) return;
 
@@ -127,10 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
       clearTimeout(gameTimeout);
       gameTimeout = null;
     }
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
 
     const randomCard = cards[Math.floor(Math.random() * cards.length)];
     const soundFile = randomCard.getAttribute('data-sound');
@@ -141,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('game-mode');
 
     // Показываем ❓ и картинку
-    modalLetter.innerHTML = "❓❓❓";
+    modalLetter.innerHTML = "❓❓";
     modalLetter.style.display = "block";
     modalImage.src = randomCard.querySelector('img').src;
     modalImage.style.display = "block";
@@ -149,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.add('show');
     document.body.style.overflow = 'hidden';
 
-    // Через 5 секунд показываем текст и проигрываем звук
+    // Очередь таймаута через 5 секунд
     gameTimeout = setTimeout(() => {
       if (!gameMode) return;
 
@@ -164,6 +157,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const grammBtn = document.getElementById('grammBtn');
   grammBtn.addEventListener('click', () => {
+    // Разблокировка аудио для iOS
+    const tmpAudio = new Audio();
+    tmpAudio.play().catch(() => {}).then(() => tmpAudio.pause());
+
+    // Сбрасываем предыдущие таймауты и аудио
+    if (gameTimeout) {
+      clearTimeout(gameTimeout);
+      gameTimeout = null;
+    }
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+
     gameMode = true;
     playRandomCard();
   });
@@ -177,4 +182,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-

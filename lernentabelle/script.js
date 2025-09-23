@@ -1,8 +1,10 @@
 let currentAudio = null;
 const overlay = document.getElementById('overlay');
 const modalLetter = document.getElementById('modalLetter');
+const modalImage = document.getElementById('modalImage');
 let activeCard = null;
 
+// Функция воспроизведения звука
 function playSound(src, onEnded) {
   if (!src) return null;
   if (currentAudio) {
@@ -16,7 +18,7 @@ function playSound(src, onEnded) {
   return audio;
 }
 
-// Подстройка шрифта, чтобы текст помещался
+// Подгонка шрифта
 function adjustFontSize(element, maxWidth) {
   let fontSize = parseInt(window.getComputedStyle(element).fontSize);
   while (element.scrollWidth > maxWidth && fontSize > 10) {
@@ -25,21 +27,28 @@ function adjustFontSize(element, maxWidth) {
   }
 }
 
+// Открытие модалки для одной карточки
 function openModalForCard(card, soundFile) {
   activeCard = card;
-  card.classList.add('hide-img');
+ // card.classList.add('hide-img');
 
   const modalHTML = card.getAttribute('data-modal-text') || card.querySelector('span')?.textContent;
   modalLetter.innerHTML = modalHTML;
+
+  // Устанавливаем картинку
+  const imgSrc = card.querySelector('img').src;
+  modalImage.src = imgSrc;
+  modalImage.alt = card.querySelector('img').alt;
 
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 
   adjustFontSize(modalLetter, modalLetter.parentElement.clientWidth - 20);
 
-  playSound(soundFile, closeModal);
+  playSound(soundFile);
 }
 
+// Закрытие модалки
 function closeModal() {
   if (activeCard) {
     activeCard.classList.remove('hide-img');
@@ -63,16 +72,31 @@ document.querySelectorAll('.letter').forEach(letter => {
   letter.addEventListener('touchend', () => letter.classList.remove('active'));
 });
 
-// Клик по overlay (фон) для закрытия модального окна
+// Клик по overlay для закрытия
 overlay.addEventListener('click', (event) => {
   if(event.target === overlay){
     closeModal();
   }
 });
 
-// Подгонка шрифта при изменении окна
-window.addEventListener('resize', () => {
-  if (overlay.classList.contains('show')) {
-    adjustFontSize(modalLetter, modalLetter.parentElement.clientWidth - 20);
+// Автопроигрывание всех карточек
+document.getElementById('playAllBtn').addEventListener('click', () => {
+  const cards = Array.from(document.querySelectorAll('.letter'));
+  let index = 0;
+
+  function playNextCard() {
+    if (index >= cards.length) {
+      closeModal();
+      return;
+    }
+    const card = cards[index];
+    openModalForCard(card, card.getAttribute('data-sound'));
+    index++;
+    // Ждём окончания аудио перед следующей карточкой
+    currentAudio.onended = () => {
+      playNextCard();
+    };
   }
+
+  playNextCard();
 });

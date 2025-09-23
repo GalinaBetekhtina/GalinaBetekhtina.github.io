@@ -1,12 +1,50 @@
 body {
   font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   background: #f2f2f2;
   margin: 0;
+  /* убираем flex, чтобы шапка была сверху */
 }
+.header {
+   width: 100%;
+  background: #333;
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  
+  display: flex;            /* делаем flex-контейнер */
+  justify-content: center;  /* центрируем по горизонтали */
+  align-items: center;      /* по вертикали */
+}
+
+.header button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.header button:hover {
+  background-color: darkorange;
+}
+
+/* Модалка - добавляем возможность показа изображения */
+.img-wrapper-modal {
+  margin-top: 15px;
+}
+
+.img-wrapper-modal img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
 
 .grid {
   display: grid;

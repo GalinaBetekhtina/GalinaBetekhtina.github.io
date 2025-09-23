@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  let currentAudio = new Audio(); // один экземпляр аудио для iOS
+  let currentAudio = null;
   let activeCard = null;
   let autoplayIndex = 0;
   let autoplayMode = false;
@@ -11,15 +11,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalLetter = document.getElementById('modalLetter');
   const modalImage = document.getElementById('modalImage');
 
+  // --- разблокировка аудио для iOS ---
+  function unlockAudioIOS(callback) {
+    const context = new (window.AudioContext || window.webkitAudioContext)();
+    const buffer = context.createBuffer(1, context.sampleRate * 0.1, context.sampleRate); // короткая тишина
+    const source = context.createBufferSource();
+    source.buffer = buffer;
+    source.connect(context.destination);
+    source.start(0);
+    source.onended = () => { if (callback) callback(); };
+  }
+
   // --- проигрывание звука ---
   function playSound(src, onEnded) {
     if (!src) return null;
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-    currentAudio.src = src;
-    currentAudio.play().catch(() => {});
-    currentAudio.onended = () => { if (onEnded) onEnded(); };
-    return currentAudio;
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+    const audio = new Audio(src);
+    currentAudio = audio;
+    audio.play().catch(() => {});
+    audio.onended = () => { if (onEnded) onEnded(); };
+    return audio;
   }
 
   // --- автоподгонка текста ---
@@ -58,15 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- закрыть ---
+  // --- закрыть модалку ---
   function closeModal() {
     activeCard = null;
     overlay.classList.remove('show');
     modal.classList.remove('game-mode');
     document.body.style.overflow = '';
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
     modalLetter.style.display = "block";
     modalImage.style.display = "none";
 
@@ -76,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- обычный клик на карточку ---
+  // --- клик по обычной карточке ---
   document.querySelectorAll('.letter').forEach(letter => {
     letter.addEventListener('click', () => {
       if (!autoplayMode && !gameMode) {
@@ -110,31 +125,32 @@ document.addEventListener('DOMContentLoaded', () => {
     autoplayCards(Array.from(document.querySelectorAll('.letter')));
   });
 
-  // --- ИГРА с полной синхронизацией ---
+  // --- РЕЖИМ ИГРЫ ---
   function playRandomCard() {
     if (!gameMode) return;
 
     const cards = Array.from(document.querySelectorAll('.letter'));
     if (cards.length === 0) return;
 
-    // очищаем предыдущий таймаут и аудио
     if (gameTimeout) {
       clearTimeout(gameTimeout);
       gameTimeout = null;
     }
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
 
     const randomCard = cards[Math.floor(Math.random() * cards.length)];
     const soundFile = randomCard.getAttribute('data-sound');
     const wordText = randomCard.getAttribute('data-modal-text') 
-               || randomCard.querySelector('span')?.outerHTML 
-               || '';
+                     || randomCard.querySelector('span')?.outerHTML 
+                     || '';
 
     modal.classList.add('game-mode');
 
-    // Показываем ❓ и картинку
-    modalLetter.innerHTML = "❓❓";
+    // Показываем ❓ и картинку сразу
+    modalLetter.innerHTML = "❓❓❓";
     modalLetter.style.display = "block";
     modalImage.src = randomCard.querySelector('img').src;
     modalImage.style.display = "block";
@@ -142,38 +158,28 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.add('show');
     document.body.style.overflow = 'hidden';
 
-    // Очередь таймаута через 5 секунд
-    gameTimeout = setTimeout(() => {
-      if (!gameMode) return;
+    // Разблокировка аудио на iOS, затем таймаут 5 секунд
+    unlockAudioIOS(() => {
+      gameTimeout = setTimeout(() => {
+        if (!gameMode) return;
 
-      modalLetter.innerHTML = wordText;
-      playSound(soundFile, () => {
-        if (gameMode) playRandomCard();
-      });
+        modalLetter.innerHTML = wordText;
+        playSound(soundFile, () => {
+          if (gameMode) playRandomCard();
+        });
 
-      gameTimeout = null;
-    }, 5000);
+        gameTimeout = null;
+      }, 5000);
+    });
   }
 
   const grammBtn = document.getElementById('grammBtn');
   grammBtn.addEventListener('click', () => {
-    // Разблокировка аудио для iOS
-    const tmpAudio = new Audio();
-    tmpAudio.play().catch(() => {}).then(() => tmpAudio.pause());
-
-    // Сбрасываем предыдущие таймауты и аудио
-    if (gameTimeout) {
-      clearTimeout(gameTimeout);
-      gameTimeout = null;
-    }
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-
     gameMode = true;
     playRandomCard();
   });
 
-  // --- выход ---
+  // --- закрытие overlay ---
   overlay.addEventListener('click', (event) => {
     if (event.target === overlay) {
       closeModal();

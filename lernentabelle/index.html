@@ -575,8 +575,21 @@
   overlay.classList.add('show');
   document.body.style.overflow = 'hidden';
 
+  // Автоматическая подстройка размера шрифта
+  adjustFontSize(modalLetter, 320); // 320px — ширина модального окна (можно подставить динамически)
+
   playSound(soundFile, closeModal);
 }
+
+function adjustFontSize(element, maxWidth) {
+  let fontSize = parseInt(window.getComputedStyle(element).fontSize);
+  
+  while (element.scrollWidth > maxWidth && fontSize > 10) {
+    fontSize -= 1;
+    element.style.fontSize = fontSize + "px";
+  }
+}
+
 
     function closeModal() {
       if (activeCard) {
@@ -600,6 +613,19 @@
       letter.addEventListener('touchstart', () => letter.classList.add('active'));
       letter.addEventListener('touchend', () => letter.classList.remove('active'));
     });
+// Закрытие модального окна при клике на фон
+overlay.addEventListener('click', (event) => {
+  // Проверяем, что клик был именно по overlay, а не по модальному окну
+  if (event.target === overlay) {
+    // Останавливаем звук
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+    }
+    // Закрываем модальное окно
+    closeModal();
+  }
+});
   </script>
 </body>
 </html>

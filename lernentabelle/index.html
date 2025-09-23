@@ -20,7 +20,7 @@
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 20px;
       width: 100%;
-      padding: 1%  5%;
+      padding: 1% 5%;
       box-sizing: border-box;
     }
 
@@ -45,7 +45,6 @@
       min-height: 180px;
       overflow: hidden;
       box-sizing: border-box;
-      position: relative;
     }
 
     .letter:hover {
@@ -114,7 +113,6 @@
       max-width: 90%;
       width: 320px;
       text-align: center;
-      position: relative;
     }
 
     .modal-letter {
@@ -125,12 +123,6 @@
       min-width: 48px;
       min-height: 48px;
       margin: 8px auto 0;
-    }
-
-    .modal-caption {
-      margin-top: 10px;
-      font-size: 18px;
-      color: #333;
     }
 
     @media (min-width: 601px) {
@@ -147,19 +139,19 @@
       </div>
       <span>A a</span>
     </div>
+
     <div class="letter" data-sound="sounds/e_wie_esel.mp3">
       <div class="img-wrapper">
         <img src="images/esel.jpg" alt="E">
       </div>
       <span>E e</span>
     </div>
-    <!-- Добавьте остальные карточки... -->
+    <!-- остальные карточки -->
   </div>
 
   <div id="overlay" class="overlay">
     <div class="modal">
       <div id="modalLetter" class="modal-letter"></div>
-      <div id="modalCaption" class="modal-caption"></div>
     </div>
   </div>
 
@@ -167,7 +159,6 @@
     let currentAudio = null;
     const overlay = document.getElementById('overlay');
     const modalLetter = document.getElementById('modalLetter');
-    const modalCaption = document.getElementById('modalCaption');
     let activeCard = null;
 
     function isMobileWidth() {
@@ -192,9 +183,11 @@
     function openModalForCard(card, soundFile) {
       activeCard = card;
       card.classList.add('hide-img');
+
+      // показываем только текст из span
       const text = card.querySelector('span')?.textContent.trim() || '';
       modalLetter.textContent = text;
-      modalCaption.textContent = card.querySelector('img')?.alt || '';
+
       overlay.classList.add('show');
       document.body.style.overflow = 'hidden';
 
@@ -219,10 +212,10 @@
           playSound(soundFile);
         }
       });
+
       letter.addEventListener('touchstart', () => letter.classList.add('active'));
       letter.addEventListener('touchend', () => letter.classList.remove('active'));
     });
   </script>
 </body>
 </html>
-

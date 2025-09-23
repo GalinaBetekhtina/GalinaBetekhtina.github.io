@@ -1,158 +1,108 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Немецкие буквы</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: #f2f2f2;
-      margin: 0;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-      width: 100%;
-      padding: 1% 5%;
-      box-sizing: border-box;
-    }
-
-    @media (max-width: 600px) {
-      .grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-      .letter span {
-         white-space: nowrap;
-         font-size: clamp(16px, 5vw, 28px);
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Немецкие буквы</title>
+<style>
+  body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f2f2f2;
+    margin: 0;
   }
-    }
 
-    .letter {
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      border: 2px solid transparent;
-      cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 10px;
-      min-height: 180px;
-      overflow: hidden;
-      box-sizing: border-box;
-    }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 1% 5%;
+    box-sizing: border-box;
+  }
 
-    .letter:hover {
-      border-color: orange;
-      transform: scale(1.05);
-    }
+  .letter {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    min-height: 180px;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
 
-    .letter.active {
-      border-color: orange;
-      transform: scale(1.05);
-    }
-    .highlight {
-       color: red; /* цвет выделения */
-       font-weight: 900;
-     }
-     .highlightm {
-       color: blue; /* цвет выделения */
-       font-weight: 900;
-     }
-     .highlightn {
-       color: green; /* цвет выделения */
-       font-weight: 900;
-     }
-     .highlightpl {
-       color: orange; /* цвет выделения */
-       font-weight: 900;
-     }
+  .letter:hover { border-color: orange; transform: scale(1.05); }
+  .letter.active { border-color: orange; transform: scale(1.05); }
 
+  .highlight { color: red; font-weight: 900; }
+  .highlightm { color: blue; font-weight: 900; }
+  .highlightn { color: green; font-weight: 900; }
+  .highlightpl { color: orange; font-weight: 900; }
 
+  .img-wrapper { flex: 1 1 auto; display: flex; justify-content: center; align-items: center; width: 100%; max-height: calc(100% - 30px); }
+  .letter img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; transition: opacity 0.2s; }
+  .letter.hide-img img { opacity: 0; pointer-events: none; }
 
+  .letter span { display: block; font-size: 34px; font-weight: bold; margin-top: 10px; }
 
-    .img-wrapper {
-      flex: 1 1 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      max-height: calc(100% - 30px);
-    }
+  .overlay {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
 
-    .letter img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      border-radius: 8px;
-      transition: opacity 0.2s;
-    }
+  .overlay.show { display: flex; opacity: 1; }
 
-    .letter.hide-img img {
-      opacity: 0;
-      pointer-events: none;
-    }
+  .modal {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+  }
 
+  @media (min-width: 1024px) {
+    .modal { width: 500px; }
+  }
+
+  .modal-letter {
+    display: inline-block;
+    width: 100%;
+    font-weight: 800;
+    font-size: 50px; /* начальный размер */
+    min-width: 48px;
+    min-height: 48px;
+    margin: 80px auto;
+    white-space: nowrap; /* запрещаем перенос */
+  }
+
+  @media (max-width: 600px) {
     .letter span {
-      display: block;
-      font-size: 34px;
-      font-weight: bold;
-      margin-top: 10px;
+      white-space: nowrap;
+      font-size: clamp(16px, 5vw, 28px);
     }
-
-    .overlay {
-      position: fixed;
-      inset: 0;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .overlay.show {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal {
-      background: white;
-      border-radius: 14px;
-      padding: 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      max-width: 90%;
-      width: 320px;
-      text-align: center;
-      
-    }
-
-    .modal-letter {
-      display: inline-block;
-      width: 100%;
-      font-weight: 800;
-      font-size: 50px;
-      min-width: 48px;
-      min-height: 48px;
-      margin: 80px auto ;
-    }
-
-    @media (min-width: 601px) {
-      .overlay { display: none !important; }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
@@ -539,93 +489,80 @@
       <div id="modalLetter" class="modal-letter"></div>
     </div>
   </div>
-  <script>
-    let currentAudio = null;
-    const overlay = document.getElementById('overlay');
-    const modalLetter = document.getElementById('modalLetter');
-    let activeCard = null;
+<script>
+let currentAudio = null;
+const overlay = document.getElementById('overlay');
+const modalLetter = document.getElementById('modalLetter');
+let activeCard = null;
 
-    function isMobileWidth() {
-      return window.matchMedia('(max-width: 600px)').matches;
-    }
-
-    function playSound(src, onEnded) {
-      if (!src) return null;
-      if (currentAudio) {
-        currentAudio.pause();
-        currentAudio.currentTime = 0;
-      }
-      const audio = new Audio(src);
-      currentAudio = audio;
-      audio.play().catch(()=>{});
-      audio.onended = () => {
-        if (onEnded) onEnded();
-      };
-      return audio;
-    }
-
-    function openModalForCard(card, soundFile) {
-  activeCard = card;
-  card.classList.add('hide-img');
-
-  // получаем HTML для модального окна
-  const modalHTML = card.getAttribute('data-modal-text') || card.querySelector('span')?.textContent;
-  modalLetter.innerHTML = modalHTML;
-
-  overlay.classList.add('show');
-  document.body.style.overflow = 'hidden';
-
-  // Автоматическая подстройка размера шрифта
-  adjustFontSize(modalLetter, 320); // 320px — ширина модального окна (можно подставить динамически)
-
-  playSound(soundFile, closeModal);
+function playSound(src, onEnded) {
+  if (!src) return null;
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+  const audio = new Audio(src);
+  currentAudio = audio;
+  audio.play().catch(()=>{});
+  audio.onended = () => { if(onEnded) onEnded(); };
+  return audio;
 }
 
+// Подстройка шрифта, чтобы текст помещался
 function adjustFontSize(element, maxWidth) {
   let fontSize = parseInt(window.getComputedStyle(element).fontSize);
-  
   while (element.scrollWidth > maxWidth && fontSize > 10) {
     fontSize -= 1;
     element.style.fontSize = fontSize + "px";
   }
 }
 
+function openModalForCard(card, soundFile) {
+  activeCard = card;
+  card.classList.add('hide-img');
 
-    function closeModal() {
-      if (activeCard) {
-        activeCard.classList.remove('hide-img');
-        activeCard = null;
-      }
-      overlay.classList.remove('show');
-      document.body.style.overflow = '';
-    }
+  const modalHTML = card.getAttribute('data-modal-text') || card.querySelector('span')?.textContent;
+  modalLetter.innerHTML = modalHTML;
 
-    document.querySelectorAll('.letter').forEach(letter => {
-      letter.addEventListener('click', () => {
-        const soundFile = letter.getAttribute('data-sound');
-        if (isMobileWidth()) {
-          openModalForCard(letter, soundFile);
-        } else {
-          playSound(soundFile);
-        }
-      });
+  overlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
 
-      letter.addEventListener('touchstart', () => letter.classList.add('active'));
-      letter.addEventListener('touchend', () => letter.classList.remove('active'));
-    });
-// Закрытие модального окна при клике на фон
+  // Подгоняем размер шрифта под ширину модального окна
+  adjustFontSize(modalLetter, modalLetter.parentElement.clientWidth - 20);
+
+  playSound(soundFile, closeModal);
+}
+
+function closeModal() {
+  if (activeCard) {
+    activeCard.classList.remove('hide-img');
+    activeCard = null;
+  }
+  overlay.classList.remove('show');
+  document.body.style.overflow = '';
+  if(currentAudio){
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+}
+
+// Клик по карточке
+document.querySelectorAll('.letter').forEach(letter => {
+  letter.addEventListener('click', () => {
+    const soundFile = letter.getAttribute('data-sound');
+    openModalForCard(letter, soundFile);
+  });
+  letter.addEventListener('touchstart', () => letter.classList.add('active'));
+  letter.addEventListener('touchend', () => letter.classList.remove('active'));
+});
+
+// Клик по overlay (фон) для закрытия модального окна
 overlay.addEventListener('click', (event) => {
-  // Проверяем, что клик был именно по overlay, а не по модальному окну
-  if (event.target === overlay) {
-    // Останавливаем звук
-    if (currentAudio) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
-    }
-    // Закрываем модальное окно
+  if(event.target === overlay){
     closeModal();
   }
 });
-  </script>
+</script>
+
 </body>
 </html>

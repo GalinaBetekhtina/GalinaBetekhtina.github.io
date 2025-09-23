@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.classList.add('game-mode');
 
     // ❓ + картинка
-    modalLetter.innerHTML = "❓";
+    modalLetter.innerHTML = "❓❓❓❓";
     modalLetter.style.display = "block";
     modalImage.src = randomCard.querySelector('img').src;
     modalImage.style.display = "block";
@@ -165,3 +165,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+

@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalLetter = document.getElementById('modalLetter');
   const modalImage = document.getElementById('modalImage');
 
-  // Создаем скрытый <audio> элемент для воспроизведения звуков
+  // --- создаем скрытый <audio> ---
   const gameAudio = document.createElement('audio');
   gameAudio.style.display = 'none';
   document.body.appendChild(gameAudio);
 
-  // --- воспроизведение аудио через DOM <audio> ---
+  // --- воспроизведение звука ---
   function playSound(src, onEnded) {
     if (!src) return;
     gameAudio.src = src;
@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
     gameAudio.onended = () => { if (onEnded) onEnded(); };
   }
 
+  // --- воспроизведение через "пустой" звук для iOS ---
+  function playWithSilence(realSrc, silenceSrc = 'sounds/silence.mp3', onEnded) {
+    playSound(silenceSrc, () => {
+      playSound(realSrc, onEnded);
+    });
+  }
+
   // --- автоподгонка текста ---
   function adjustFontSize(element, maxWidth) {
     let fontSize = parseInt(window.getComputedStyle(element).fontSize);
@@ -36,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // --- открыть модалку для обычного клика ---
+  // --- открыть модалку ---
   function openModalForCard(card, soundFile, showImage = false, onEnded = null) {
     currentCard = card;
     const modalHTML = card.getAttribute('data-modal-text') || card.querySelector('span')?.textContent;
@@ -44,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (showImage) {
       modalImage.src = card.querySelector('img').src;
-      modalImage.style.display = 'block';
+      modalImage.style.display = "block";
       modalLetter.classList.add('autoplay');
     } else {
-      modalImage.style.display = 'none';
+      modalImage.style.display = "none";
       modalLetter.classList.remove('autoplay');
     }
 
@@ -56,10 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
     modalLetter.style.display = "block";
     adjustFontSize(modalLetter, modalLetter.parentElement.clientWidth - 20);
 
-    playSound(soundFile, () => {
-      if (onEnded) onEnded();
-      if (!autoplayMode && !gameMode) closeModal();
-    });
+    if (soundFile) {
+      playWithSilence(soundFile, 'sounds/silence.mp3', () => {
+        if (onEnded) onEnded();
+        if (!autoplayMode && !gameMode) closeModal();
+      });
+    }
   }
 
   // --- закрыть модалку ---
@@ -102,9 +111,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = cards[autoplayIndex];
     const soundFile = card.getAttribute('data-sound');
 
-    openModalForCard(card, soundFile, true, () => {
-      autoplayIndex++;
-      autoplayCards(cards);
+    openModalForCard(card, null, true, () => {
+      // включаем сначала пустой, потом реальный звук
+      playWithSilence(soundFile, 'sounds/silence.mp3', () => {
+        autoplayIndex++;
+        autoplayCards(cards);
+      });
     });
   }
 
@@ -121,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cards = Array.from(document.querySelectorAll('.letter'));
     if (cards.length === 0) return;
 
-    // Сбрасываем предыдущие таймауты и звук
     if (gameTimeout) {
       clearTimeout(gameTimeout);
       gameTimeout = null;
@@ -134,8 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const wordText = randomCard.getAttribute('data-modal-text') || randomCard.querySelector('span')?.outerHTML || '';
 
     modal.classList.add('game-mode');
-
-    // Показываем ❓ и картинку
     modalLetter.innerHTML = "❓";
     modalLetter.style.display = "block";
     modalImage.src = randomCard.querySelector('img').src;
@@ -143,14 +152,13 @@ document.addEventListener('DOMContentLoaded', () => {
     overlay.classList.add('show');
     document.body.style.overflow = 'hidden';
 
-    // Задержка 5 секунд перед заменой текста и воспроизведением звука
     gameTimeout = setTimeout(() => {
       if (!gameMode) return;
 
       modalLetter.innerHTML = wordText;
 
-      // Воспроизводим звук
-      playSound(soundFile, () => {
+      // сначала пустой, потом реальный звук
+      playWithSilence(soundFile, 'sounds/silence.mp3', () => {
         if (gameMode) playRandomCard();
       });
 
@@ -164,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
     playRandomCard();
   });
 
-  // --- закрытие при клике на оверлей ---
+  // --- закрытие по оверлею ---
   overlay.addEventListener('click', (event) => {
     if (event.target === overlay) {
       closeModal();
